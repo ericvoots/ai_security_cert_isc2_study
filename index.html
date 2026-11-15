@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AI Security Practice Questions</title>
+<style>
+  :root {
+    --bg: #f5f6f8; --card: #ffffff; --text: #1b1f24; --muted: #5b6470; --border: #d9dde3;
+    --accent: #2457d6; --on-accent: #ffffff; --accent-weak: #e8eefc;
+    --ok: #1a7f45; --ok-weak: #e3f4ea; --bad: #b42318; --bad-weak: #fdecea;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #0f1216; --card: #181c22; --text: #e6e9ee; --muted: #9aa3ae; --border: #2c323b;
+      --accent: #7ea6ff; --on-accent: #0f1216; --accent-weak: #1c2740;
+      --ok: #4cc38a; --ok-weak: #12291e; --bad: #ff7b72; --bad-weak: #2e1715;
+    }
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; font: 16px/1.55 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; background: var(--bg); color: var(--text); }
+  main { max-width: 760px; margin: 0 auto; padding: 16px 16px 48px; }
+  header h1 { font-size: 1.3rem; margin: 8px 0 2px; }
+  header p { margin: 0 0 16px; color: var(--muted); font-size: .9rem; }
+  h2 { font-size: 1.1rem; margin: 0 0 8px; }
+  .card { background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 16px; margin-bottom: 12px; }
+  .field { display: block; font-weight: 600; margin: 14px 0 6px; }
+  .field:first-child { margin-top: 0; }
+  select, button, input { font: inherit; }
+  select { width: 100%; padding: 10px; border-radius: 8px; border: 1px solid var(--border); background: var(--card); color: var(--text); }
+  .checks label { display: flex; gap: 10px; align-items: flex-start; padding: 6px 0; cursor: pointer; }
+  .checks input { margin-top: 4px; accent-color: var(--accent); }
+  .checks .n { color: var(--muted); margin-left: auto; padding-left: 8px; white-space: nowrap; }
+  .row { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+  .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  .btn { border: 0; border-radius: 8px; padding: 12px 18px; background: var(--accent); color: var(--on-accent); font-weight: 600; cursor: pointer; }
+  .btn.secondary { background: transparent; color: var(--accent); border: 1px solid var(--accent); }
+  .btn:disabled { opacity: .45; cursor: default; }
+  .link { background: none; border: 0; padding: 4px 0; color: var(--accent); cursor: pointer; font-size: .9rem; }
+  .muted { color: var(--muted); }
+  .small { font-size: .875rem; }
+  .meta { display: flex; justify-content: space-between; align-items: center; color: var(--muted); font-size: .85rem; margin-bottom: 8px; gap: 8px; }
+  .progress { height: 6px; background: var(--border); border-radius: 3px; overflow: hidden; margin-bottom: 14px; }
+  .progress > div { height: 100%; background: var(--accent); transition: width .2s; }
+  .tag { font-size: .78rem; color: var(--muted); margin-bottom: 6px; }
+  .question { font-size: 1.08rem; font-weight: 600; margin: 0 0 12px; }
+  .opt { display: flex; gap: 12px; width: 100%; text-align: left; padding: 12px 14px; margin: 8px 0; border: 1px solid var(--border); border-radius: 10px; background: var(--card); color: var(--text); cursor: pointer; }
+  .opt:hover:not(:disabled) { border-color: var(--accent); }
+  .opt .key { font-weight: 700; color: var(--muted); min-width: 1.1em; }
+  .opt.correct { border-color: var(--ok); background: var(--ok-weak); }
+  .opt.wrong { border-color: var(--bad); background: var(--bad-weak); }
+  .opt:disabled { cursor: default; }
+  .feedback { border-left: 4px solid var(--ok); background: var(--ok-weak); padding: 12px 14px; border-radius: 8px; margin-top: 14px; }
+  .feedback.bad { border-color: var(--bad); background: var(--bad-weak); }
+  .feedback p { margin: 6px 0 0; }
+  .refs { margin-top: 10px; font-size: .85rem; }
+  .refs h3 { font-size: .8rem; text-transform: uppercase; letter-spacing: .04em; color: var(--muted); margin: 0 0 4px; }
+  .refs ul { margin: 0; padding-left: 18px; }
+  .refs li { margin: 4px 0; }
+  .refs a { color: var(--accent); word-break: break-word; }
+  .refs .where { color: var(--muted); }
+  .actions { display: flex; justify-content: flex-end; margin-top: 14px; }
+  .score { font-size: 2.6rem; font-weight: 700; line-height: 1.1; }
+  .objrow { display: grid; grid-template-columns: 1fr auto; gap: 4px 12px; padding: 8px 0; border-top: 1px solid var(--border); }
+  .objrow:first-child { border-top: 0; }
+  .bar { grid-column: 1 / -1; height: 6px; background: var(--bad-weak); border-radius: 3px; overflow: hidden; }
+  .bar > div { height: 100%; background: var(--ok); }
+  details { border-top: 1px solid var(--border); padding: 10px 0; }
+  details summary { cursor: pointer; font-weight: 600; }
+  details p { margin: 8px 0 0; }
+  footer { color: var(--muted); font-size: .8rem; margin-top: 24px; }
+  kbd { font: .8rem ui-monospace, monospace; border: 1px solid var(--border); border-radius: 4px; padding: 0 4px; }
+  @media (max-width: 480px) { .grid2 { grid-template-columns: 1fr; } }
+</style>
+</head>
+<body>
+<main>
+  <header>
+    <h1 id="title">AI Security Practice Questions</h1>
+    <p id="subtitle">Loading questions…</p>
+  </header>
+  <div id="app"></div>
+  <footer id="footer"></footer>
+</main>
+
+<script>
+(function () {
+  "use strict";
+
+  const MISSED_KEY = "aisec-qbank-missed";
+  const store = {
+    get(k, d) { try { const v = localStorage.getItem(k); return v ? JSON.parse(v) : d; } catch (e) { return d; } },
+    set(k, v) { try { localStorage.setItem(k, JSON.stringify(v)); } catch (e) { /* storage unavailable */ } }
+  };
+
+  const app = document.getElementById("app");
+  let data = null;
+  let all = [];
+  let session = null;
+  const settings = { domain: "all", objectives: null, type: "all", count: "25", shuffleQ: true, shuffleO: true, missedOnly: false };
+
+  // ---------- helpers ----------
+  function h(tag, attrs, ...kids) {
+    const el = document.createElement(tag);
+    for (const [k, v] of Object.entries(attrs || {})) {
+      if (v == null || v === false) continue;
+      if (k === "class") el.className = v;
+      else if (k.startsWith("on")) el.addEventListener(k.slice(2), v);
+      else if (v === true) el.setAttribute(k, "");
+      else el.setAttribute(k, v);
+    }
+    for (const kid of kids.flat(Infinity)) {
+      if (kid == null || kid === false) continue;
+      el.append(kid.nodeType ? kid : document.createTextNode(String(kid)));
+    }
+    return el;
+  }
+  function render(view, nodes, scroll) {
+    app.dataset.view = view;
+    app.replaceChildren(...nodes.filter(Boolean));
+    if (scroll !== false) window.scrollTo(0, 0);
+  }
+  function shuffle(a) {
+    for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; }
+    return a;
+  }
+  function renderRefs(refs) {
+    if (!Array.isArray(refs) || !refs.length) return null;
+    return h("div", { class: "refs" },
+      h("h3", {}, "References"),
+      h("ul", {}, refs.map(ref => {
+        const safeUrl = typeof ref.url === "string" && /^https?:\/\//i.test(ref.url) ? ref.url : null;
+        const title = safeUrl
+          ? h("a", { href: safeUrl, target: "_blank", rel: "noopener noreferrer" }, ref.title || safeUrl)
+          : h("span", {}, ref.title || "");
+        const where = [ref.section, ref.page ? "p. " + ref.page : null].filter(Boolean).join(", ");
+        return h("li", {}, title, where ? h("span", { class: "where" }, " (" + where + ")") : null);
+      })));
+  }
+  function missedSet() { return new Set(store.get(MISSED_KEY, [])); }
+  function updateMissed(id, ok) {
+    const s = missedSet();
+    if (ok) s.delete(id); else s.add(id);
+    store.set(MISSED_KEY, [...s]);
+  }
+
+  // ---------- loading ----------
+  async function load() {
+    try {
+      const res = await fetch("questions.json", { cache: "no-store" });
+      if (!res.ok) throw new Error("HTTP " + res.status);
+      init(await res.json());
+    } catch (e) {
+      showLoadFallback();
+    }
+  }
+
+  function showLoadFallback() {
+    document.getElementById("subtitle").textContent = "Couldn't load questions.json automatically.";
+    const input = h("input", { type: "file", accept: ".json,application/json" });
+    input.addEventListener("change", () => {
+      const f = input.files[0]; if (!f) return;
+      const r = new FileReader();
+      r.onload = () => { try { init(JSON.parse(r.result)); } catch (err) { alert("That file isn't valid JSON: " + err.message); } };
+      r.readAsText(f);
+    });
+    render("load", [h("div", { class: "card" },
+      h("p", {}, "Browsers block this page from reading questions.json when it's opened straight from your computer. It works normally on GitHub Pages or any web server."),
+      h("p", {}, "To use it locally, choose the file here, or run ", h("kbd", {}, "python3 -m http.server"), " in the folder and open http://localhost:8000."),
+      input
+    )]);
+  }
+
+  function init(d) {
+    data = d; all = [];
+    for (const dom of d.domains || []) {
+      for (const q of dom.questions || []) {
+        all.push(Object.assign({}, q, {
+          id: dom.domain + "-" + q.number,
+          domain: dom.domain,
+          domainName: dom.name,
+          objectiveName: (dom.objectives || {})[q.objective] || ""
+        }));
+      }
+    }
+    const firstWithQs = (d.domains || []).find(x => (x.questions || []).length);
+    settings.domain = firstWithQs ? String(firstWithQs.domain) : "all";
+    settings.objectives = null;
+    document.getElementById("title").textContent = d.title || "AI Security Practice Questions";
+    const live = (d.domains || []).filter(x => (x.questions || []).length).length;
+    document.getElementById("subtitle").textContent = all.length + " questions across " + live + " of " + (d.domains || []).length + " domains";
+    document.getElementById("footer").textContent = d.disclaimer || "";
+    renderSetup(true);
+  }
+
+  // ---------- setup ----------
+  function currentDomain() { return data.domains.find(d => String(d.domain) === settings.domain); }
+
+  function matching() {
+    const missed = missedSet();
+    return all.filter(q =>
+      (settings.domain === "all" || String(q.domain) === settings.domain) &&
+      (settings.domain === "all" || !settings.objectives || settings.objectives.has(q.objective)) &&
+      (settings.type === "all" || q.type === settings.type) &&
+      (!settings.missedOnly || missed.has(q.id))
+    );
+  }
+
+  function renderSetup(scroll) {
+    const missedCount = missedSet().size;
+    if (!missedCount) settings.missedOnly = false;
+
+    const domSelect = h("select", { id: "dom", onchange: e => { settings.domain = e.target.value; settings.objectives = null; renderSetup(false); } },
+      h("option", { value: "all", selected: settings.domain === "all" }, "All domains (" + all.length + ")"),
+      data.domains.map(d => {
+        const n = (d.questions || []).length;
+        return h("option", { value: String(d.domain), disabled: n === 0, selected: settings.domain === String(d.domain) },
+          "Domain " + d.domain + ": " + d.name + (n ? " (" + n + ")" : " (coming soon)"));
+      })
+    );
+
+    let objBlock = null;
+    const dom = settings.domain !== "all" ? currentDomain() : null;
+    if (dom) {
+      const objs = Object.keys(dom.objectives || {});
+      if (!settings.objectives) settings.objectives = new Set(objs);
+      objBlock = h("div", {},
+        h("div", { class: "row", style: "justify-content:space-between" },
+          h("span", { class: "field" }, "Objectives"),
+          h("span", {},
+            h("button", { type: "button", class: "link", onclick: () => { settings.objectives = new Set(objs); renderSetup(false); } }, "All"),
+            " · ",
+            h("button", { type: "button", class: "link", onclick: () => { settings.objectives = new Set(); renderSetup(false); } }, "None"))
+        ),
+        h("div", { class: "checks" }, objs.map(o => {
+          const n = dom.questions.filter(q => q.objective === o).length;
+          return h("label", {},
+            h("input", { type: "checkbox", checked: settings.objectives.has(o), onchange: e => { e.target.checked ? settings.objectives.add(o) : settings.objectives.delete(o); renderSetup(false); } }),
+            h("span", {}, o + " " + dom.objectives[o]),
+            h("span", { class: "n" }, n));
+        }))
+      );
+    }
+
+    const typeSelect = h("select", { onchange: e => { settings.type = e.target.value; renderSetup(false); } },
+      [["all", "All types"], ["multiple_choice", "Multiple choice"], ["true_false", "True / False"]]
+        .map(([v, l]) => h("option", { value: v, selected: settings.type === v }, l)));
+    const countSelect = h("select", { onchange: e => { settings.count = e.target.value; renderSetup(false); } },
+      [["10", "10"], ["25", "25"], ["50", "50"], ["all", "All"]]
+        .map(([v, l]) => h("option", { value: v, selected: settings.count === v }, l)));
+
+    const pool = matching();
+    const n = settings.count === "all" ? pool.length : Math.min(pool.length, +settings.count);
+
+    const toggle = (key, label, disabled) => h("label", {},
+      h("input", { type: "checkbox", checked: settings[key], disabled: !!disabled, onchange: e => { settings[key] = e.target.checked; renderSetup(false); } }),
+      h("span", {}, label));
+
+    render("setup", [
+      h("div", { class: "card" },
+        h("label", { class: "field", for: "dom" }, "Domain"), domSelect,
+        objBlock,
+        h("div", { class: "grid2" },
+          h("div", {}, h("span", { class: "field" }, "Question type"), typeSelect),
+          h("div", {}, h("span", { class: "field" }, "Number of questions"), countSelect)),
+        h("div", { class: "checks", style: "margin-top:12px" },
+          toggle("shuffleQ", "Shuffle question order"),
+          toggle("shuffleO", "Shuffle answer choices"),
+          toggle("missedOnly", "Only questions I've missed (" + missedCount + ")", !missedCount))
+      ),
+      h("div", { class: "row", style: "justify-content:space-between" },
+        h("span", { class: "muted small" }, pool.length + " match · " + n + " in this quiz"),
+        h("button", { class: "btn", disabled: !n, onclick: () => start(pool, settings.count) }, "Start quiz")),
+      missedCount ? h("p", { class: "small" },
+        h("button", { type: "button", class: "link", onclick: () => { if (confirm("Clear your missed-question history?")) { store.set(MISSED_KEY, []); renderSetup(false); } } }, "Reset missed-question history")) : null
+    ], scroll);
+  }
+
+  // ---------- quiz ----------
+  function start(pool, count) {
+    let qs = pool.slice();
+    if (settings.shuffleQ) shuffle(qs);
+    if (count !== "all") qs = qs.slice(0, +count);
+    session = {
+      qs: qs.map(q => Object.assign({}, q, {
+        display: q.type === "multiple_choice" && settings.shuffleO ? shuffle(q.options.slice()) : q.options.slice()
+      })),
+      idx: 0,
+      results: []
+    };
+    renderQuestion(true);
+  }
+
+  function renderQuestion(scroll) {
+    const s = session, q = s.qs[s.idx], total = s.qs.length;
+    const r = s.results[s.idx];
+    const tf = q.type === "true_false";
+    const keys = tf ? ["T", "F"] : ["A", "B", "C", "D", "E", "F"];
+    const answeredCount = s.results.filter(Boolean).length;
+    const correctCount = s.results.filter(x => x && x.ok).length;
+
+    const opts = q.display.map((o, i) => {
+      let cls = "opt";
+      if (r) { if (o === q.answer) cls += " correct"; else if (i === r.pickedIdx) cls += " wrong"; }
+      return h("button", { type: "button", class: cls, disabled: !!r, onclick: () => choose(i) },
+        h("span", { class: "key" }, keys[i]), h("span", {}, o));
+    });
+
+    const feedback = r ? h("div", { class: "feedback" + (r.ok ? "" : " bad"), id: "fb" },
+      h("strong", {}, r.ok ? "Correct." : "Not quite. Answer: " + q.answer),
+      h("p", {}, q.explanation),
+      renderRefs(q.references)) : null;
+
+    const last = s.idx === total - 1;
+    const nextBtn = r ? h("button", { class: "btn", id: "next", onclick: next }, last ? "See results" : "Next question") : null;
+
+    render("quiz", [
+      h("div", { class: "meta" },
+        h("span", {}, "Question " + (s.idx + 1) + " of " + total + " · " + correctCount + "/" + answeredCount + " correct"),
+        h("button", { type: "button", class: "link", onclick: renderResults }, "End quiz")),
+      h("div", { class: "progress" }, h("div", { style: "width:" + Math.round(100 * answeredCount / total) + "%" })),
+      h("div", { class: "card" },
+        h("div", { class: "tag" }, "Domain " + q.domain + " · " + q.objective + " " + q.objectiveName + " · " + (tf ? "True/False" : "Multiple choice")),
+        h("p", { class: "question" }, q.question),
+        opts,
+        feedback,
+        nextBtn ? h("div", { class: "actions" }, nextBtn) : null),
+      h("p", { class: "muted small" }, "Keys: ", tf ? [h("kbd", {}, "T"), " / ", h("kbd", {}, "F")] : [h("kbd", {}, "A"), "–", h("kbd", {}, "D"), " or ", h("kbd", {}, "1"), "–", h("kbd", {}, "4")], " to answer, ", h("kbd", {}, "Enter"), " for next.")
+    ], scroll);
+
+    if (r) {
+      const b = document.getElementById("next");
+      if (b) b.focus({ preventScroll: true });
+      const fb = document.getElementById("fb");
+      if (fb && fb.scrollIntoView) fb.scrollIntoView({ block: "nearest", behavior: "smooth" });
+    }
+  }
+
+  function choose(i) {
+    const s = session;
+    if (s.results[s.idx]) return;
+    const q = s.qs[s.idx];
+    const ok = q.display[i] === q.answer;
+    s.results[s.idx] = { q: q, picked: q.display[i], pickedIdx: i, ok: ok };
+    updateMissed(q.id, ok);
+    renderQuestion(false);
+  }
+
+  function next() {
+    if (session.idx < session.qs.length - 1) { session.idx++; renderQuestion(true); }
+    else renderResults();
+  }
+
+  // ---------- results ----------
+  function renderResults() {
+    const res = session.results.filter(Boolean);
+    const correct = res.filter(r => r.ok).length;
+    const pct = res.length ? Math.round(100 * correct / res.length) : 0;
+
+    const by = {};
+    for (const r of res) {
+      const k = r.q.objective;
+      if (!by[k]) by[k] = { name: r.q.objectiveName, n: 0, c: 0 };
+      by[k].n++; if (r.ok) by[k].c++;
+    }
+    const objRows = Object.keys(by).sort((a, b) => a.localeCompare(b, undefined, { numeric: true })).map(k => {
+      const o = by[k];
+      return h("div", { class: "objrow" },
+        h("span", {}, k + " " + o.name),
+        h("span", { class: "muted" }, o.c + "/" + o.n),
+        h("div", { class: "bar" }, h("div", { style: "width:" + Math.round(100 * o.c / o.n) + "%" })));
+    });
+
+    const missed = res.filter(r => !r.ok);
+    render("results", [
+      h("div", { class: "card" },
+        h("div", { class: "score" }, pct + "%"),
+        h("p", { class: "muted" }, correct + " of " + res.length + " answered correctly" + (res.length < session.qs.length ? " (ended early, " + session.qs.length + " in quiz)" : "")),
+        objRows.length ? h("div", {}, h("h2", { style: "margin-top:12px" }, "By objective"), objRows) : null),
+      h("div", { class: "row" },
+        missed.length ? h("button", { class: "btn", onclick: () => start(missed.map(r => r.q), "all") }, "Retry missed (" + missed.length + ")") : null,
+        h("button", { class: "btn secondary", onclick: () => renderSetup(true) }, "New quiz")),
+      missed.length ? h("div", { class: "card", style: "margin-top:12px" },
+        h("h2", {}, "Review missed questions"),
+        missed.map(r => h("details", {},
+          h("summary", {}, r.q.objective + " · " + r.q.question),
+          h("p", {}, "Your answer: ", r.picked),
+          h("p", {}, "Correct answer: ", h("strong", {}, r.q.answer)),
+          h("p", { class: "muted" }, r.q.explanation),
+          renderRefs(r.q.references)))) : null
+    ], true);
+  }
+
+  // ---------- keyboard ----------
+  document.addEventListener("keydown", e => {
+    if (!session || app.dataset.view !== "quiz") return;
+    if (e.metaKey || e.ctrlKey || e.altKey) return;
+    const q = session.qs[session.idx];
+    const k = e.key.toLowerCase();
+    if (!session.results[session.idx]) {
+      let i = -1;
+      if (q.type === "true_false") { if (k === "t" || k === "1") i = 0; else if (k === "f" || k === "2") i = 1; }
+      else { const m = "abcdef".indexOf(k); const n = parseInt(k, 10); i = (k.length === 1 && m >= 0) ? m : (n >= 1 ? n - 1 : -1); }
+      if (i >= 0 && i < q.display.length) { e.preventDefault(); choose(i); }
+    } else if (k === "enter" || k === "n" || k === "arrowright") {
+      if (k === "enter" && document.activeElement && document.activeElement.tagName === "BUTTON") return;
+      e.preventDefault(); next();
+    }
+  });
+
+  load();
+})();
+</script>
+</body>
+</html>
