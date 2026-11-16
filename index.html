@@ -22,23 +22,72 @@
   main { max-width: 760px; margin: 0 auto; padding: 16px 16px 48px; }
   header h1 { font-size: 1.3rem; margin: 8px 0 2px; }
   header p { margin: 0 0 16px; color: var(--muted); font-size: .9rem; }
-  h2 { font-size: 1.1rem; margin: 0 0 8px; }
+  h2 { font-size: 1.1rem; margin: 0 0 4px; }
   .card { background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 16px; margin-bottom: 12px; }
   .field { display: block; font-weight: 600; margin: 14px 0 6px; }
-  .field:first-child { margin-top: 0; }
   select, button, input { font: inherit; }
   select { width: 100%; padding: 10px; border-radius: 8px; border: 1px solid var(--border); background: var(--card); color: var(--text); }
   .checks label { display: flex; gap: 10px; align-items: flex-start; padding: 6px 0; cursor: pointer; }
   .checks input { margin-top: 4px; accent-color: var(--accent); }
   .checks .n { color: var(--muted); margin-left: auto; padding-left: 8px; white-space: nowrap; }
+  .checks.levels { display: flex; flex-wrap: wrap; gap: 4px 20px; }
+  .checks.levels label { padding: 2px 0; }
+  .checks.levels .n { margin-left: 0; padding-left: 0; }
+  .lvl { display: inline-block; font-size: .72rem; font-weight: 600; border-radius: 999px; padding: 1px 8px; border: 1px solid var(--border); color: var(--muted); }
+  .lvl.easy { color: var(--ok); border-color: var(--ok); }
+  .lvl.hard { color: var(--bad); border-color: var(--bad); }
   .row { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
   .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
   .btn { border: 0; border-radius: 8px; padding: 12px 18px; background: var(--accent); color: var(--on-accent); font-weight: 600; cursor: pointer; }
   .btn.secondary { background: transparent; color: var(--accent); border: 1px solid var(--accent); }
+  .btn.small { padding: 8px 12px; font-size: .9rem; }
   .btn:disabled { opacity: .45; cursor: default; }
   .link { background: none; border: 0; padding: 4px 0; color: var(--accent); cursor: pointer; font-size: .9rem; }
   .muted { color: var(--muted); }
   .small { font-size: .875rem; }
+
+  /* quiz builder */
+  .domrow { display: grid; grid-template-columns: auto 1fr auto; gap: 4px 12px; align-items: center; padding: 12px 0; border-top: 1px solid var(--border); }
+  .domrow:first-of-type { border-top: 0; }
+  .domrow.off .domname { color: var(--muted); }
+  .domrow input[type=checkbox] { width: 20px; height: 20px; accent-color: var(--accent); }
+  .domname { font-weight: 600; line-height: 1.3; }
+  .domname .avail { display: block; font-weight: 400; font-size: .8rem; color: var(--muted); }
+  .count { display: flex; align-items: center; gap: 6px; }
+  .num { width: 70px; padding: 8px; border-radius: 8px; border: 1px solid var(--border); background: var(--card); color: var(--text); text-align: center; }
+  .num:disabled { opacity: .45; }
+  details.objs { grid-column: 2 / -1; border: 0; padding: 4px 0 0; }
+  details.objs summary { font-weight: 400; font-size: .875rem; color: var(--accent); }
+  .spread { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin-top: 12px; padding-top: 12px; border-top: 1px solid var(--border); font-size: .9rem; }
+  .totalbar { position: sticky; bottom: 0; background: var(--bg); padding: 10px 0; display: flex; flex-wrap: wrap; gap: 8px; align-items: center; justify-content: space-between; }
+  .total { font-weight: 700; }
+  .toast { font-size: .85rem; color: var(--ok); }
+
+  /* mode tabs */
+  .tabs { display: flex; gap: 4px; background: var(--border); padding: 4px; border-radius: 10px; margin-bottom: 12px; }
+  .tab { flex: 1; border: 0; border-radius: 8px; padding: 10px; background: transparent; color: var(--text); font-weight: 600; cursor: pointer; }
+  .tab[aria-selected=true] { background: var(--card); color: var(--accent); }
+  .card.notice { border-color: var(--accent); background: var(--accent-weak); }
+
+  /* progress */
+  .stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-top: 8px; }
+  .stat { font-size: 1.6rem; font-weight: 700; line-height: 1.2; }
+  .hist { font-size: .9rem; }
+  .histrow { display: grid; grid-template-columns: 1.6fr 1fr .7fr .6fr 1fr; gap: 8px; padding: 6px 0; border-top: 1px solid var(--border); align-items: baseline; }
+  .histrow:first-child { border-top: 0; }
+  @media (max-width: 560px) {
+    .stats { grid-template-columns: 1fr 1fr; }
+    .histrow { grid-template-columns: 1fr auto auto; }
+    .histrow > :nth-child(2), .histrow > :nth-child(5) { display: none; }
+  }
+
+  /* mock exam */
+  .timer { font-variant-numeric: tabular-nums; font-weight: 700; color: var(--text); }
+  .timer.warn { color: var(--bad); }
+  .opt.selected { border-color: var(--accent); background: var(--accent-weak); }
+  .opt.selected .key { color: var(--accent); }
+
+  /* quiz */
   .meta { display: flex; justify-content: space-between; align-items: center; color: var(--muted); font-size: .85rem; margin-bottom: 8px; gap: 8px; }
   .progress { height: 6px; background: var(--border); border-radius: 3px; overflow: hidden; margin-bottom: 14px; }
   .progress > div { height: 100%; background: var(--accent); transition: width .2s; }
@@ -60,14 +109,15 @@
   .refs a { color: var(--accent); word-break: break-word; }
   .refs .where { color: var(--muted); }
   .actions { display: flex; justify-content: flex-end; margin-top: 14px; }
+
+  /* results */
   .score { font-size: 2.6rem; font-weight: 700; line-height: 1.1; }
   .objrow { display: grid; grid-template-columns: 1fr auto; gap: 4px 12px; padding: 8px 0; border-top: 1px solid var(--border); }
-  .objrow:first-child { border-top: 0; }
   .bar { grid-column: 1 / -1; height: 6px; background: var(--bad-weak); border-radius: 3px; overflow: hidden; }
   .bar > div { height: 100%; background: var(--ok); }
-  details { border-top: 1px solid var(--border); padding: 10px 0; }
-  details summary { cursor: pointer; font-weight: 600; }
-  details p { margin: 8px 0 0; }
+  details.review { border-top: 1px solid var(--border); padding: 10px 0; }
+  details.review summary { cursor: pointer; font-weight: 600; }
+  details.review p { margin: 8px 0 0; }
   footer { color: var(--muted); font-size: .8rem; margin-top: 24px; }
   kbd { font: .8rem ui-monospace, monospace; border: 1px solid var(--border); border-radius: 4px; padding: 0 4px; }
   @media (max-width: 480px) { .grid2 { grid-template-columns: 1fr; } }
@@ -88,6 +138,15 @@
   "use strict";
 
   const MISSED_KEY = "aisec-qbank-missed";
+  const SETTINGS_KEY = "aisec-qbank-settings";
+  const DEFAULT_COUNT = 25;
+  const EXAM_KEY = "aisec-qbank-exam";
+  const EXAM_ITEMS = 160;   // ISC2 AI Security pilot exam: 160 items
+  const EXAM_MINUTES = 180; // in 3 hours
+  const HISTORY_KEY = "aisec-qbank-history";
+  const RESULTS_FORMAT = "aisec-qbank-results";
+  const LEVELS = ["easy", "medium", "hard"];
+  const LEVEL_LABEL = { easy: "Easy", medium: "Medium", hard: "Hard" };
   const store = {
     get(k, d) { try { const v = localStorage.getItem(k); return v ? JSON.parse(v) : d; } catch (e) { return d; } },
     set(k, v) { try { localStorage.setItem(k, JSON.stringify(v)); } catch (e) { /* storage unavailable */ } }
@@ -97,7 +156,14 @@
   let data = null;
   let all = [];
   let session = null;
-  const settings = { domain: "all", objectives: null, type: "all", count: "25", shuffleQ: true, shuffleO: true, missedOnly: false };
+  let byId = {};
+  let exam = null;       // active mock exam (also persisted in localStorage)
+  let examTimer = null;
+  // picks[domainNumber] = { on, count (requested), objectives:Set, open }
+  const settings = {
+    mode: "practice", picks: {}, type: "all", levels: new Set(LEVELS), shuffleQ: true, shuffleO: true, missedOnly: false, spreadTotal: DEFAULT_COUNT,
+    examCount: EXAM_ITEMS, examMinutes: EXAM_MINUTES, examMinutesManual: false
+  };
 
   // ---------- helpers ----------
   function h(tag, attrs, ...kids) {
@@ -106,6 +172,7 @@
       if (v == null || v === false) continue;
       if (k === "class") el.className = v;
       else if (k.startsWith("on")) el.addEventListener(k.slice(2), v);
+      else if (k === "value") el.value = v;
       else if (v === true) el.setAttribute(k, "");
       else el.setAttribute(k, v);
     }
@@ -137,11 +204,127 @@
         return h("li", {}, title, where ? h("span", { class: "where" }, " (" + where + ")") : null);
       })));
   }
+  function levelOf(q) { return LEVELS.includes(q.difficulty) ? q.difficulty : "medium"; }
   function missedSet() { return new Set(store.get(MISSED_KEY, [])); }
   function updateMissed(id, ok) {
     const s = missedSet();
     if (ok) s.delete(id); else s.add(id);
     store.set(MISSED_KEY, [...s]);
+  }
+
+  // ---------- progress history: one aggregate record per finished quiz or exam ----------
+  // Kept in this browser and exportable as results.json (see results.template.json and the README).
+  let progressMsg = "";
+  function history() { const v = store.get(HISTORY_KEY, []); return Array.isArray(v) ? v : []; }
+  function tally(res, keyFn) {
+    const out = {};
+    for (const r of res) {
+      const k = keyFn(r.q);
+      const o = out[k] || (out[k] = { correct: 0, total: 0 });
+      o.total++; if (r.ok) o.correct++;
+    }
+    return out;
+  }
+  // res = the scored items: answered questions for a practice quiz, every question for a mock exam
+  function recordAttempt(info, res) {
+    const correct = res.filter(r => r.ok).length;
+    const rec = {
+      id: new Date(info.startedAt).toISOString() + "-" + Math.random().toString(36).slice(2, 6),
+      date: new Date(info.endedAt).toISOString(),
+      mode: info.mode,
+      bank_version: data.version || null,
+      questions: info.questions,
+      answered: info.answered,
+      correct: correct,
+      score_pct: res.length ? Math.round(1000 * correct / res.length) / 10 : 0,
+      duration_sec: Math.max(0, Math.round(info.durationMs / 1000)),
+      time_limit_sec: info.limitMs ? Math.round(info.limitMs / 1000) : null,
+      timed_out: !!info.timedOut,
+      setup: info.setup || "",
+      by_domain: tally(res, q => String(q.domain)),
+      by_objective: tally(res, q => q.objective),
+      by_difficulty: tally(res, q => levelOf(q)),
+      by_type: tally(res, q => q.type)
+    };
+    const list = history();
+    list.push(rec);
+    store.set(HISTORY_KEY, list);
+    return rec;
+  }
+  function cleanTally(t) {
+    const out = {};
+    if (!t || typeof t !== "object") return out;
+    for (const [k, v] of Object.entries(t)) {
+      const c = Number(v && v.correct), n = Number(v && v.total);
+      if (k.length <= 40 && Number.isFinite(c) && Number.isFinite(n) && n > 0 && c >= 0 && c <= n) out[k] = { correct: c, total: n };
+    }
+    return out;
+  }
+  function cleanAttempt(a) {
+    if (!a || typeof a !== "object" || typeof a.id !== "string" || !a.id || isNaN(Date.parse(a.date))) return null;
+    const num = (x, d) => (Number.isFinite(Number(x)) ? Number(x) : d);
+    return {
+      id: a.id.slice(0, 80), date: new Date(a.date).toISOString(),
+      mode: a.mode === "exam" ? "exam" : "practice",
+      bank_version: typeof a.bank_version === "string" ? a.bank_version.slice(0, 20) : null,
+      questions: num(a.questions, 0), answered: num(a.answered, 0), correct: num(a.correct, 0),
+      score_pct: num(a.score_pct, 0), duration_sec: num(a.duration_sec, 0),
+      time_limit_sec: a.time_limit_sec == null ? null : num(a.time_limit_sec, null),
+      timed_out: a.timed_out === true, setup: typeof a.setup === "string" ? a.setup.slice(0, 500) : "",
+      by_domain: cleanTally(a.by_domain), by_objective: cleanTally(a.by_objective),
+      by_difficulty: cleanTally(a.by_difficulty), by_type: cleanTally(a.by_type)
+    };
+  }
+  function exportResults() {
+    const payload = {
+      format: RESULTS_FORMAT, version: 1, exported: new Date().toISOString(), bank_version: data.version || null,
+      attempts: history(),
+      missed: [...missedSet()].sort((a, b) => a.localeCompare(b, undefined, { numeric: true }))
+    };
+    const blob = new Blob([JSON.stringify(payload, null, 2) + "\n"], { type: "application/json" });
+    const url = URL.createObjectURL(blob);
+    const a = h("a", { href: url, download: "results.json" });
+    document.body.append(a); a.click(); a.remove();
+    setTimeout(() => URL.revokeObjectURL(url), 2000);
+  }
+  function importResults(file) {
+    const reader = new FileReader();
+    reader.onload = () => {
+      let d;
+      try { d = JSON.parse(reader.result); } catch (e) { alert("That file isn't valid JSON."); return; }
+      if (!d || d.format !== RESULTS_FORMAT || !Array.isArray(d.attempts)) {
+        alert("That doesn't look like a results.json file from this page (expected \"format\": \"" + RESULTS_FORMAT + "\").");
+        return;
+      }
+      const list = history();
+      const seen = new Set(list.map(x => x.id));
+      let added = 0, skipped = 0;
+      for (const raw of d.attempts) {
+        const a = cleanAttempt(raw);
+        if (!a) { skipped++; continue; }
+        if (seen.has(a.id)) continue;
+        list.push(a); seen.add(a.id); added++;
+      }
+      list.sort((x, y) => x.date.localeCompare(y.date));
+      store.set(HISTORY_KEY, list);
+      let missedAdded = 0;
+      if (Array.isArray(d.missed)) {
+        const s = missedSet();
+        for (const id of d.missed) if (typeof id === "string" && byId[id] && !s.has(id)) { s.add(id); missedAdded++; }
+        store.set(MISSED_KEY, [...s]);
+      }
+      progressMsg = "Loaded " + added + " new attempt" + (added === 1 ? "" : "s") +
+        (missedAdded ? " and " + missedAdded + " missed question" + (missedAdded === 1 ? "" : "s") : "") +
+        (skipped ? " (" + skipped + " unreadable record" + (skipped === 1 ? "" : "s") + " skipped)" : "") + ".";
+      settings.mode = "progress";
+      renderSetup(false);
+    };
+    reader.readAsText(file);
+  }
+  function savedNote() {
+    return h("p", { class: "muted small", style: "margin:8px 0 0" },
+      "Saved to your progress in this browser. ",
+      h("button", { type: "button", class: "link small", onclick: exportResults }, "Download results.json"));
   }
 
   // ---------- loading ----------
@@ -182,111 +365,643 @@
           objectiveName: (dom.objectives || {})[q.objective] || ""
         }));
       }
+      settings.picks[dom.domain] = { on: false, count: 0, objectives: new Set(Object.keys(dom.objectives || {})), open: false };
     }
+    // default: first domain with questions, 25 questions
     const firstWithQs = (d.domains || []).find(x => (x.questions || []).length);
-    settings.domain = firstWithQs ? String(firstWithQs.domain) : "all";
-    settings.objectives = null;
+    if (firstWithQs) { const p = settings.picks[firstWithQs.domain]; p.on = true; p.count = DEFAULT_COUNT; }
+
+    // a shared link wins; otherwise restore the last setup from this browser
+    if (!applyConfig(new URLSearchParams(location.hash.slice(1)))) {
+      const saved = store.get(SETTINGS_KEY, null);
+      if (saved) applyConfig(new URLSearchParams(saved));
+    }
+
     document.getElementById("title").textContent = d.title || "AI Security Practice Questions";
     const live = (d.domains || []).filter(x => (x.questions || []).length).length;
     document.getElementById("subtitle").textContent = all.length + " questions across " + live + " of " + (d.domains || []).length + " domains";
     document.getElementById("footer").textContent = d.disclaimer || "";
+
+    byId = {};
+    for (const q of all) byId[q.id] = q;
+
+    // resume a mock exam left in progress (the clock kept running while away)
+    const saved = store.get(EXAM_KEY, null);
+    if (saved && Array.isArray(saved.ids) && saved.ids.length && saved.ids.every(id => byId[id])) {
+      exam = Object.assign({}, saved, { selected: null, finished: false });
+      settings.mode = "exam";
+      if (Date.now() >= exam.deadline) { finishExam(true); return; }
+      startTimer();
+    } else if (saved) {
+      store.set(EXAM_KEY, null);
+    }
     renderSetup(true);
   }
 
-  // ---------- setup ----------
-  function currentDomain() { return data.domains.find(d => String(d.domain) === settings.domain); }
-
-  function matching() {
-    const missed = missedSet();
-    return all.filter(q =>
-      (settings.domain === "all" || String(q.domain) === settings.domain) &&
-      (settings.domain === "all" || !settings.objectives || settings.objectives.has(q.objective)) &&
-      (settings.type === "all" || q.type === settings.type) &&
-      (!settings.missedOnly || missed.has(q.id))
-    );
+  // ---------- quiz configuration (shareable as #d=1:20,2:10&t=multiple_choice) ----------
+  function configString() {
+    const parts = [];
+    for (const dom of data.domains) {
+      const p = settings.picks[dom.domain];
+      if (!p.on) continue;
+      const allObjs = Object.keys(dom.objectives || {});
+      const objs = p.objectives.size === allObjs.length ? "" : ":" + [...p.objectives].join("+");
+      parts.push(dom.domain + ":" + p.count + objs);
+    }
+    const q = new URLSearchParams();
+    q.set("d", parts.join(","));
+    if (settings.type !== "all") q.set("t", settings.type);
+    if (settings.levels.size !== LEVELS.length) q.set("lv", LEVELS.filter(l => settings.levels.has(l)).join("+"));
+    if (!settings.shuffleQ) q.set("sq", "0");
+    if (!settings.shuffleO) q.set("so", "0");
+    return q.toString();
   }
 
+  function applyConfig(params) {
+    const d = params.get("d");
+    if (d == null) return false;
+    for (const dom of data.domains) settings.picks[dom.domain].on = false;
+    for (const item of d.split(",").filter(Boolean)) {
+      const [id, count, objs] = item.split(":");
+      const dom = data.domains.find(x => String(x.domain) === id);
+      if (!dom) continue;
+      const p = settings.picks[dom.domain];
+      p.on = true;
+      p.count = Math.max(0, parseInt(count, 10) || 0);
+      if (objs) {
+        const valid = new Set(Object.keys(dom.objectives || {}));
+        const chosen = objs.split("+").filter(o => valid.has(o));
+        if (chosen.length) p.objectives = new Set(chosen);
+      }
+    }
+    const t = params.get("t");
+    if (t === "multiple_choice" || t === "true_false") settings.type = t;
+    const lv = (params.get("lv") || "").split(/[+ ]/).filter(l => LEVELS.includes(l));
+    settings.levels = new Set(lv.length ? lv : LEVELS);
+    if (params.get("sq") === "0") settings.shuffleQ = false;
+    if (params.get("so") === "0") settings.shuffleO = false;
+    return true;
+  }
+
+  function saveConfig() { store.set(SETTINGS_KEY, configString()); }
+
+  function shareLink() {
+    return location.href.split("#")[0] + "#" + configString();
+  }
+
+  // ---------- pools and counts ----------
+  function domainPool(domId) {
+    const p = settings.picks[domId];
+    const missed = settings.missedOnly ? missedSet() : null;
+    return all.filter(q =>
+      q.domain === domId &&
+      p.objectives.has(q.objective) &&
+      (settings.type === "all" || q.type === settings.type) &&
+      settings.levels.has(levelOf(q)) &&
+      (!missed || missed.has(q.id)));
+  }
+  function effectiveCount(domId) {
+    const p = settings.picks[domId];
+    return p.on ? Math.min(p.count, domainPool(domId).length) : 0;
+  }
+  function totalCount() {
+    return data.domains.reduce((s, d) => s + effectiveCount(d.domain), 0);
+  }
+
+  function spreadEvenly(total) {
+    const doms = data.domains
+      .filter(d => settings.picks[d.domain].on)
+      .map(d => ({ p: settings.picks[d.domain], cap: domainPool(d.domain).length }));
+    doms.forEach(x => { x.p.count = 0; });
+    let left = total, progress = true;
+    while (left > 0 && progress) {
+      progress = false;
+      for (const x of doms) {
+        if (left > 0 && x.p.count < x.cap) { x.p.count++; left--; progress = true; }
+      }
+    }
+  }
+
+  // ---------- setup / quiz builder ----------
   function renderSetup(scroll) {
     const missedCount = missedSet().size;
     if (!missedCount) settings.missedOnly = false;
 
-    const domSelect = h("select", { id: "dom", onchange: e => { settings.domain = e.target.value; settings.objectives = null; renderSetup(false); } },
-      h("option", { value: "all", selected: settings.domain === "all" }, "All domains (" + all.length + ")"),
-      data.domains.map(d => {
-        const n = (d.questions || []).length;
-        return h("option", { value: String(d.domain), disabled: n === 0, selected: settings.domain === String(d.domain) },
-          "Domain " + d.domain + ": " + d.name + (n ? " (" + n + ")" : " (coming soon)"));
-      })
-    );
-
-    let objBlock = null;
-    const dom = settings.domain !== "all" ? currentDomain() : null;
-    if (dom) {
+    const rows = data.domains.map(dom => {
+      const id = dom.domain;
+      const p = settings.picks[id];
+      const totalInDomain = (dom.questions || []).length;
+      const avail = domainPool(id).length;
+      const empty = totalInDomain === 0;
       const objs = Object.keys(dom.objectives || {});
-      if (!settings.objectives) settings.objectives = new Set(objs);
-      objBlock = h("div", {},
-        h("div", { class: "row", style: "justify-content:space-between" },
-          h("span", { class: "field" }, "Objectives"),
-          h("span", {},
-            h("button", { type: "button", class: "link", onclick: () => { settings.objectives = new Set(objs); renderSetup(false); } }, "All"),
-            " · ",
-            h("button", { type: "button", class: "link", onclick: () => { settings.objectives = new Set(); renderSetup(false); } }, "None"))
-        ),
-        h("div", { class: "checks" }, objs.map(o => {
+
+      const numInput = h("input", {
+        type: "number", class: "num", min: "0", max: String(avail), inputmode: "numeric",
+        value: String(effectiveCount(id)), disabled: !p.on || !avail,
+        "aria-label": "Questions from domain " + id,
+        oninput: e => { p.count = Math.max(0, Math.min(avail, parseInt(e.target.value, 10) || 0)); updateSummary(); },
+        // tidy the displayed value in place; a full re-render here would swallow the user's next tap
+        onchange: e => { e.target.value = String(effectiveCount(id)); updateSummary(); }
+      });
+
+      const objBlock = (!empty && p.on) ? h("details", {
+          class: "objs", open: p.open,
+          ontoggle: e => { p.open = e.target.open; }
+        },
+        h("summary", {}, "Objectives: " + p.objectives.size + " of " + objs.length + " selected"),
+        h("div", { class: "row small" },
+          h("button", { type: "button", class: "link", onclick: () => { p.objectives = new Set(objs); renderSetup(false); } }, "All"),
+          " · ",
+          h("button", { type: "button", class: "link", onclick: () => { p.objectives = new Set(); renderSetup(false); } }, "None")),
+        h("div", { class: "checks small" }, objs.map(o => {
           const n = dom.questions.filter(q => q.objective === o).length;
           return h("label", {},
-            h("input", { type: "checkbox", checked: settings.objectives.has(o), onchange: e => { e.target.checked ? settings.objectives.add(o) : settings.objectives.delete(o); renderSetup(false); } }),
+            h("input", { type: "checkbox", checked: p.objectives.has(o), onchange: e => { e.target.checked ? p.objectives.add(o) : p.objectives.delete(o); renderSetup(false); } }),
             h("span", {}, o + " " + dom.objectives[o]),
             h("span", { class: "n" }, n));
         }))
-      );
-    }
+      ) : null;
+
+      return h("div", { class: "domrow" + (p.on ? "" : " off") },
+        h("input", {
+          type: "checkbox", checked: p.on && !empty, disabled: empty,
+          "aria-label": "Include domain " + id,
+          onchange: e => {
+            p.on = e.target.checked;
+            if (p.on && !p.count) p.count = Math.min(DEFAULT_COUNT, avail);
+            renderSetup(false);
+          }
+        }),
+        h("div", { class: "domname" },
+          "Domain " + id + ": " + dom.name,
+          h("span", { class: "avail" }, empty ? "Coming soon" : avail + " available" + (avail !== totalInDomain ? " with current filters (" + totalInDomain + " total)" : ""))),
+        empty ? h("span") : h("div", { class: "count" },
+          numInput,
+          h("button", { type: "button", class: "link", disabled: !p.on || !avail, onclick: () => { p.count = avail; renderSetup(false); } }, "Max")),
+        objBlock);
+    });
+
+    const spreadInput = h("input", {
+      type: "number", class: "num", min: "1", value: String(settings.spreadTotal), inputmode: "numeric",
+      "aria-label": "Total questions to spread",
+      oninput: e => { settings.spreadTotal = Math.max(1, parseInt(e.target.value, 10) || 1); }
+    });
+    const anyOn = data.domains.some(d => settings.picks[d.domain].on);
 
     const typeSelect = h("select", { onchange: e => { settings.type = e.target.value; renderSetup(false); } },
-      [["all", "All types"], ["multiple_choice", "Multiple choice"], ["true_false", "True / False"]]
+      [["all", "All types"], ["multiple_choice", "Multiple choice only"], ["true_false", "True / False only"]]
         .map(([v, l]) => h("option", { value: v, selected: settings.type === v }, l)));
-    const countSelect = h("select", { onchange: e => { settings.count = e.target.value; renderSetup(false); } },
-      [["10", "10"], ["25", "25"], ["50", "50"], ["all", "All"]]
-        .map(([v, l]) => h("option", { value: v, selected: settings.count === v }, l)));
-
-    const pool = matching();
-    const n = settings.count === "all" ? pool.length : Math.min(pool.length, +settings.count);
 
     const toggle = (key, label, disabled) => h("label", {},
       h("input", { type: "checkbox", checked: settings[key], disabled: !!disabled, onchange: e => { settings[key] = e.target.checked; renderSetup(false); } }),
       h("span", {}, label));
 
-    render("setup", [
+    const practiceNodes = [
       h("div", { class: "card" },
-        h("label", { class: "field", for: "dom" }, "Domain"), domSelect,
-        objBlock,
-        h("div", { class: "grid2" },
-          h("div", {}, h("span", { class: "field" }, "Question type"), typeSelect),
-          h("div", {}, h("span", { class: "field" }, "Number of questions"), countSelect)),
-        h("div", { class: "checks", style: "margin-top:12px" },
+        h("h2", {}, "Build your quiz"),
+        h("p", { class: "muted small", style: "margin:0 0 4px" }, "Tick the domains you want and set how many questions to draw from each. Questions are picked at random."),
+        rows,
+        h("div", { class: "spread" },
+          h("span", {}, "Or spread"), spreadInput,
+          h("span", {}, "questions evenly across the ticked domains"),
+          h("button", { type: "button", class: "btn secondary small", disabled: !anyOn, onclick: () => { spreadEvenly(settings.spreadTotal); renderSetup(false); } }, "Spread"))
+      ),
+      h("div", { class: "card" },
+        h("h2", {}, "Options"),
+        h("span", { class: "field" }, "Question type"), typeSelect,
+        h("span", { class: "field" }, "Difficulty"),
+        h("div", { class: "checks levels" }, LEVELS.map(l => h("label", {},
+          h("input", { type: "checkbox", checked: settings.levels.has(l), onchange: e => {
+            if (e.target.checked) settings.levels.add(l);
+            else if (settings.levels.size > 1) settings.levels.delete(l);
+            else e.target.checked = true; // keep at least one level selected
+            renderSetup(false);
+          } }),
+          h("span", {}, LEVEL_LABEL[l]),
+          h("span", { class: "n" }, all.filter(q => levelOf(q) === l).length)))),
+        h("div", { class: "checks", style: "margin-top:8px" },
           toggle("shuffleQ", "Shuffle question order"),
           toggle("shuffleO", "Shuffle answer choices"),
-          toggle("missedOnly", "Only questions I've missed (" + missedCount + ")", !missedCount))
+          toggle("missedOnly", "Only questions I've missed (" + missedCount + ")", !missedCount)),
+        missedCount ? h("button", { type: "button", class: "link small", onclick: () => { if (confirm("Clear your missed-question history?")) { store.set(MISSED_KEY, []); renderSetup(false); } } }, "Reset missed-question history") : null
       ),
-      h("div", { class: "row", style: "justify-content:space-between" },
-        h("span", { class: "muted small" }, pool.length + " match · " + n + " in this quiz"),
-        h("button", { class: "btn", disabled: !n, onclick: () => start(pool, settings.count) }, "Start quiz")),
-      missedCount ? h("p", { class: "small" },
-        h("button", { type: "button", class: "link", onclick: () => { if (confirm("Clear your missed-question history?")) { store.set(MISSED_KEY, []); renderSetup(false); } } }, "Reset missed-question history")) : null
+      h("div", { class: "totalbar" },
+        h("div", {},
+          h("div", { class: "total", id: "total" }),
+          h("button", { type: "button", class: "link small", onclick: copyLink }, "Copy link to this quiz"),
+          " ", h("span", { class: "toast", id: "toast" })),
+        h("button", { class: "btn", id: "start", onclick: startFromSettings }, "Start quiz"))
+    ];
+    const mode = settings.mode;
+    const body = mode === "exam" ? examSetupNodes() : mode === "progress" ? progressNodes() : practiceNodes;
+    render("setup", [examBanner(), modeTabs(), ...body], scroll);
+    if (mode === "exam") refreshExamHints(); else if (mode === "practice") updateSummary();
+  }
+
+  function modeTabs() {
+    const tab = (m, label) => h("button", {
+      type: "button", class: "tab", role: "tab", "aria-selected": String(settings.mode === m),
+      onclick: () => { settings.mode = m; progressMsg = ""; renderSetup(false); }
+    }, label);
+    return h("div", { class: "tabs", role: "tablist" }, tab("practice", "Practice quiz"), tab("exam", "Mock exam"), tab("progress", "Progress"));
+  }
+
+  // ---------- progress view ----------
+  function pct(c, n) { return n ? Math.round(100 * c / n) : 0; }
+  function sumTallies(list, key) {
+    const out = {};
+    for (const a of list) for (const [k, v] of Object.entries(a[key] || {})) {
+      const o = out[k] || (out[k] = { correct: 0, total: 0 });
+      o.correct += v.correct; o.total += v.total;
+    }
+    return out;
+  }
+  function tallyRows(t, keys, labelFn) {
+    return keys.filter(k => t[k]).map(k => h("div", { class: "objrow" },
+      h("span", {}, labelFn(k)),
+      h("span", { class: "muted" }, t[k].correct + "/" + t[k].total + " (" + pct(t[k].correct, t[k].total) + "%)"),
+      h("div", { class: "bar" }, h("div", { style: "width:" + pct(t[k].correct, t[k].total) + "%" }))));
+  }
+  function objectiveName(o) {
+    const dom = data.domains.find(d => (d.objectives || {})[o]);
+    return dom ? dom.objectives[o] : "";
+  }
+  function practiceObjectives(objs) {
+    const wanted = new Set(objs);
+    for (const dom of data.domains) {
+      const p = settings.picks[dom.domain];
+      const mine = Object.keys(dom.objectives || {}).filter(o => wanted.has(o));
+      p.on = mine.length > 0;
+      if (p.on) { p.objectives = new Set(mine); p.count = Math.min(10 * mine.length, domainPool(dom.domain).length); }
+    }
+    settings.mode = "practice"; settings.missedOnly = false;
+    renderSetup(true);
+  }
+  function fmtDate(iso) {
+    const d = new Date(iso);
+    return d.toLocaleDateString(undefined, { year: "numeric", month: "short", day: "numeric" }) + " " +
+      d.toLocaleTimeString(undefined, { hour: "numeric", minute: "2-digit" });
+  }
+
+  function progressNodes() {
+    const list = history();
+    const fileInput = h("input", {
+      type: "file", accept: ".json,application/json", id: "importFile", style: "display:none",
+      onchange: e => { const f = e.target.files[0]; if (f) importResults(f); e.target.value = ""; }
+    });
+    const missedCount = missedSet().size;
+    const fileCard = h("div", { class: "card" },
+      h("h2", {}, "Your progress file"),
+      h("p", { class: "muted small", style: "margin:0 0 10px" },
+        "Every finished quiz and mock exam is saved in this browser as a summary (score, time, and results by domain, objective and difficulty). ",
+        "Download it as results.json to back it up or move it to another browser or computer, and load it to restore or combine. ",
+        "The file stays on your computer; this page never uploads it."),
+      h("div", { class: "row" },
+        h("button", { class: "btn small", id: "exportBtn", disabled: !list.length && !missedCount, onclick: exportResults }, "Download results.json"),
+        h("button", { class: "btn secondary small", id: "importBtn", onclick: () => fileInput.click() }, "Load results.json"),
+        list.length ? h("button", { type: "button", class: "link small", onclick: () => {
+          if (confirm("Delete all saved results from this browser? Download results.json first if you want to keep them.")) {
+            store.set(HISTORY_KEY, []); progressMsg = "History cleared."; renderSetup(false);
+          }
+        } }, "Clear history") : null,
+        fileInput),
+      progressMsg ? h("p", { class: "toast", id: "progressMsg", style: "margin:10px 0 0" }, progressMsg) : null);
+
+    if (!list.length) {
+      return [fileCard, h("div", { class: "card" }, h("p", { class: "muted", style: "margin:0" },
+        "No results yet. Finish a practice quiz or a mock exam and your scores will appear here."))];
+    }
+
+    const scored = list.reduce((s, a) => s + Object.values(a.by_domain).reduce((x, v) => x + v.total, 0), 0);
+    const correct = list.reduce((s, a) => s + Object.values(a.by_domain).reduce((x, v) => x + v.correct, 0), 0);
+    const exams = list.filter(a => a.mode === "exam");
+    const byDom = sumTallies(list, "by_domain");
+    const byObj = sumTallies(list, "by_objective");
+    const byLvl = sumTallies(list, "by_difficulty");
+    const objKeys = Object.keys(byObj).sort((a, b) => a.localeCompare(b, undefined, { numeric: true }));
+    const weak = objKeys.filter(o => byObj[o].total >= 3 && objectiveName(o))
+      .sort((a, b) => byObj[a].correct / byObj[a].total - byObj[b].correct / byObj[b].total)
+      .slice(0, 5).filter(o => byObj[o].correct / byObj[o].total < 0.8);
+    const domName = k => { const d = data.domains.find(x => String(x.domain) === k); return "Domain " + k + (d ? ": " + d.name : ""); };
+
+    const summary = h("div", { class: "card" },
+      h("h2", {}, "Summary"),
+      h("div", { class: "stats" },
+        h("div", {}, h("div", { class: "stat" }, String(list.length)), h("div", { class: "muted small" }, "quizzes and exams")),
+        h("div", {}, h("div", { class: "stat" }, String(scored)), h("div", { class: "muted small" }, "questions scored")),
+        h("div", {}, h("div", { class: "stat" }, pct(correct, scored) + "%"), h("div", { class: "muted small" }, "overall accuracy")),
+        h("div", {}, h("div", { class: "stat" }, exams.length ? Math.round(exams[exams.length - 1].score_pct) + "%" : "–"),
+          h("div", { class: "muted small" }, exams.length ? "last mock exam" : "no mock exams yet"))),
+      h("h2", { style: "margin-top:16px" }, "By domain"),
+      tallyRows(byDom, data.domains.map(d => String(d.domain)), domName),
+      h("h2", { style: "margin-top:16px" }, "By difficulty"),
+      tallyRows(byLvl, LEVELS, k => LEVEL_LABEL[k]));
+
+    const focus = weak.length ? h("div", { class: "card" },
+      h("h2", {}, "Focus areas"),
+      h("p", { class: "muted small", style: "margin:0 0 4px" }, "Your lowest-scoring objectives with at least 3 questions answered."),
+      tallyRows(byObj, weak, o => o + " " + objectiveName(o)),
+      h("div", { class: "row", style: "margin-top:10px" },
+        h("button", { class: "btn small", onclick: () => practiceObjectives(weak) }, "Build a quiz on these"))) : null;
+
+    const recent = list.slice(-15).reverse();
+    const recentCard = h("div", { class: "card" },
+      h("h2", {}, "Recent attempts"),
+      h("div", { class: "hist" }, recent.map(a => h("div", { class: "histrow" },
+        h("span", {}, fmtDate(a.date)),
+        h("span", {}, a.mode === "exam" ? "Mock exam" : "Practice"),
+        h("span", {}, a.correct + "/" + (a.mode === "exam" ? a.questions : a.answered)),
+        h("strong", {}, Math.round(a.score_pct) + "%"),
+        h("span", { class: "muted" }, fmtTime(a.duration_sec * 1000) + (a.timed_out ? " (timed out)" : ""))))),
+      list.length > recent.length ? h("p", { class: "muted small", style: "margin:8px 0 0" }, "Showing the latest " + recent.length + " of " + list.length + ".") : null,
+      h("details", { class: "review" }, h("summary", {}, "All objectives"),
+        tallyRows(byObj, objKeys, o => o + " " + objectiveName(o))));
+
+    return [fileCard, summary, focus, recentCard];
+  }
+
+  // ---------- mock exam: setup ----------
+  function examAutoMinutes(n) { return Math.ceil(n * EXAM_MINUTES / EXAM_ITEMS); }
+  function examCount() { return Math.max(1, Math.min(settings.examCount, all.length)); }
+  function examMinutes() { return settings.examMinutesManual ? settings.examMinutes : examAutoMinutes(examCount()); }
+
+  function examSetupNodes() {
+    const maxN = all.length;
+    const countInput = h("input", {
+      type: "number", class: "num", id: "examCount", min: "1", max: String(maxN), inputmode: "numeric", value: String(examCount()),
+      oninput: e => { settings.examCount = Math.max(1, Math.min(maxN, parseInt(e.target.value, 10) || 1)); refreshExamHints(); },
+      onchange: e => { e.target.value = String(examCount()); refreshExamHints(); }
+    });
+    const minInput = h("input", {
+      type: "number", class: "num", id: "examMinutes", min: "1", inputmode: "numeric", value: String(examMinutes()),
+      oninput: e => { settings.examMinutesManual = true; settings.examMinutes = Math.max(1, parseInt(e.target.value, 10) || 1); refreshExamHints(); },
+      onchange: () => renderSetup(false)
+    });
+    const busy = !!(exam && !exam.finished);
+    return [h("div", { class: "card" },
+      h("h2", {}, "Mock exam"),
+      h("p", { class: "muted small", style: "margin:0 0 8px" },
+        "Runs under exam conditions: a countdown timer, one question at a time, no skipping, no going back, and no answers or explanations until you finish. The real pilot exam is 160 questions in 3 hours."),
+      h("ul", { class: "small muted", style: "margin:0 0 4px;padding-left:18px" },
+        h("li", {}, "Questions are drawn evenly from every domain that has questions."),
+        h("li", {}, "If time runs out, unanswered questions count as wrong."),
+        h("li", {}, "Progress is saved in this browser, so a refresh won't lose your exam. The clock keeps running while you're away.")),
+      h("div", { class: "grid2" },
+        h("div", {}, h("label", { class: "field", for: "examCount" }, "Questions"), countInput,
+          h("div", { class: "muted small" }, "Up to " + maxN + " available")),
+        h("div", {}, h("label", { class: "field", for: "examMinutes" }, "Time limit (minutes)"), minInput,
+          h("div", { class: "muted small", id: "examPace" }))),
+      maxN < EXAM_ITEMS ? h("p", { class: "small muted" },
+        "The bank has " + maxN + " questions so far, so the time limit is scaled to the real exam's pace. A full 160-question exam becomes possible as more domains are added.") : null,
+      h("div", { class: "row", style: "justify-content:space-between;margin-top:12px" },
+        settings.examMinutesManual
+          ? h("button", { type: "button", class: "link small", onclick: () => { settings.examMinutesManual = false; renderSetup(false); } }, "Reset to real exam pace")
+          : h("span"),
+        h("button", { class: "btn", disabled: busy, title: busy ? "Finish or discard the exam in progress first" : null, onclick: startExam }, "Start mock exam"))
+    )];
+  }
+
+  function refreshExamHints() {
+    const n = examCount();
+    if (!settings.examMinutesManual) {
+      const m = document.getElementById("examMinutes");
+      if (m) m.value = String(examAutoMinutes(n));
+    }
+    const p = document.getElementById("examPace");
+    if (p) p.textContent = "About " + Math.round(examMinutes() * 60 / n) + " seconds per question (real exam: about 68)";
+  }
+
+  function examBanner() {
+    if (!exam || exam.finished) return null;
+    const left = Math.max(0, exam.deadline - Date.now());
+    return h("div", { class: "card notice" },
+      h("strong", {}, "Mock exam in progress"),
+      h("p", { class: "small", style: "margin:4px 0 10px" },
+        exam.idx + " of " + exam.ids.length + " answered · " + fmtTime(left) + " left (the clock keeps running)"),
+      h("div", { class: "row" },
+        h("button", { class: "btn small", onclick: () => renderExam(true) }, "Resume exam"),
+        h("button", { class: "btn secondary small", onclick: () => {
+          if (confirm("Discard this exam? Your answers so far won't be scored.")) {
+            clearInterval(examTimer); examTimer = null; exam = null; store.set(EXAM_KEY, null); renderSetup(false);
+          }
+        } }, "Discard")));
+  }
+
+  // ---------- mock exam: running ----------
+  function fmtTime(ms) {
+    const s = Math.max(0, Math.ceil(ms / 1000));
+    const hh = Math.floor(s / 3600), mm = Math.floor((s % 3600) / 60), ss = s % 60;
+    const pad = x => String(x).padStart(2, "0");
+    return hh ? hh + ":" + pad(mm) + ":" + pad(ss) : mm + ":" + pad(ss);
+  }
+
+  // draw n questions spread as evenly as possible across domains that have questions
+  function drawEven(n) {
+    const pools = data.domains.map(d => shuffle(all.filter(q => q.domain === d.domain))).filter(p => p.length);
+    const take = pools.map(() => 0);
+    let left = n, progress = true;
+    while (left > 0 && progress) {
+      progress = false;
+      pools.forEach((p, i) => { if (left > 0 && take[i] < p.length) { take[i]++; left--; progress = true; } });
+    }
+    return shuffle(pools.flatMap((p, i) => p.slice(0, take[i])));
+  }
+
+  function saveExam() {
+    store.set(EXAM_KEY, {
+      ids: exam.ids, display: exam.display, answers: exam.answers, idx: exam.idx,
+      startedAt: exam.startedAt, limitMs: exam.limitMs, deadline: exam.deadline
+    });
+  }
+
+  function startExam() {
+    const n = examCount();
+    const limitMs = examMinutes() * 60000;
+    const list = drawEven(n);
+    const now = Date.now();
+    exam = {
+      ids: list.map(q => q.id),
+      display: list.map(q => q.type === "multiple_choice" ? shuffle(q.options.slice()) : q.options.slice()),
+      answers: [], idx: 0, startedAt: now, limitMs: limitMs, deadline: now + limitMs,
+      selected: null, finished: false
+    };
+    saveExam();
+    startTimer();
+    renderExam(true);
+  }
+
+  function startTimer() {
+    clearInterval(examTimer);
+    examTimer = setInterval(tick, 1000);
+  }
+
+  function tick() {
+    if (!exam || exam.finished) return;
+    const left = exam.deadline - Date.now();
+    if (left <= 0) { finishExam(true); return; }
+    const t = document.getElementById("timer");
+    if (t) {
+      t.textContent = "Time left " + fmtTime(left);
+      t.classList.toggle("warn", left < 5 * 60000);
+    }
+  }
+
+  function renderExam(scroll) {
+    const i = exam.idx, total = exam.ids.length;
+    const q = byId[exam.ids[i]], disp = exam.display[i];
+    const tf = q.type === "true_false";
+    const keys = tf ? ["T", "F"] : ["A", "B", "C", "D", "E", "F"];
+    const last = i === total - 1;
+
+    render("exam", [
+      h("div", { class: "meta" },
+        h("span", {}, "Question " + (i + 1) + " of " + total),
+        h("span", { class: "timer", id: "timer", role: "timer", "aria-live": "off" }),
+        h("button", { type: "button", class: "link", onclick: () => {
+          const left = total - exam.idx;
+          if (confirm("End the exam now? " + left + " unanswered question" + (left === 1 ? "" : "s") + " will count as wrong.")) finishExam(false);
+        } }, "End exam")),
+      h("div", { class: "progress" }, h("div", { style: "width:" + Math.round(100 * i / total) + "%" })),
+      h("div", { class: "card" },
+        h("p", { class: "question" }, q.question),
+        disp.map((o, j) => h("button", {
+          type: "button", class: "opt" + (exam.selected === j ? " selected" : ""), "aria-pressed": String(exam.selected === j),
+          onclick: () => { exam.selected = j; renderExam(false); }
+        }, h("span", { class: "key" }, keys[j]), h("span", {}, o))),
+        h("div", { class: "actions" },
+          h("button", { class: "btn", id: "submit", disabled: exam.selected == null, onclick: submitAnswer },
+            last ? "Submit and finish" : "Submit and next"))),
+      h("p", { class: "muted small" },
+        "Once you submit, you can't return to this question. Keys: ",
+        tf ? [h("kbd", {}, "T"), " / ", h("kbd", {}, "F")] : [h("kbd", {}, "A"), "–", h("kbd", {}, "D"), " or ", h("kbd", {}, "1"), "–", h("kbd", {}, "4")],
+        " to choose, ", h("kbd", {}, "Enter"), " to submit.")
     ], scroll);
+    if (!examTimer) startTimer();
+    tick();
+  }
+
+  function submitAnswer() {
+    if (!exam || exam.finished || exam.selected == null) return;
+    exam.answers[exam.idx] = exam.selected;
+    exam.selected = null;
+    exam.idx++;
+    if (exam.idx >= exam.ids.length) { finishExam(false); return; }
+    saveExam();
+    renderExam(true);
+  }
+
+  function finishExam(timedOut) {
+    clearInterval(examTimer); examTimer = null;
+    exam.finished = true;
+    exam.endedAt = Math.min(Date.now(), exam.deadline);
+    store.set(EXAM_KEY, null);
+    const res = exam.ids.map((id, i) => {
+      const q = byId[id];
+      const a = exam.answers[i];
+      const picked = a == null ? null : exam.display[i][a];
+      return { q: q, picked: picked, ok: picked === q.answer, answered: a != null };
+    });
+    res.forEach(r => { if (r.answered) updateMissed(r.q.id, r.ok); });
+    recordAttempt({
+      mode: "exam", startedAt: exam.startedAt, endedAt: exam.endedAt,
+      durationMs: Math.min(exam.endedAt - exam.startedAt, exam.limitMs), limitMs: exam.limitMs, timedOut: timedOut,
+      questions: res.length, answered: res.filter(r => r.answered).length,
+      setup: "n=" + res.length + "&m=" + Math.round(exam.limitMs / 60000)
+    }, res);
+    renderExamResults(res, timedOut);
+  }
+
+  // ---------- mock exam: results ----------
+  function renderExamResults(res, timedOut) {
+    const total = res.length;
+    const correct = res.filter(r => r.ok).length;
+    const unanswered = res.filter(r => !r.answered).length;
+    const answered = total - unanswered;
+    const pct = Math.round(100 * correct / total);
+    const used = Math.max(0, Math.min(exam.endedAt - exam.startedAt, exam.limitMs));
+    const missed = res.filter(r => !r.ok);
+    const multiDomain = new Set(res.map(r => r.q.domain)).size > 1;
+
+    const reviewItem = r => h("details", { class: "review" },
+      h("summary", {}, (r.ok ? "✓ " : "✗ ") + r.q.objective + " · " + r.q.question + " ", h("span", { class: "lvl " + levelOf(r.q) }, LEVEL_LABEL[levelOf(r.q)])),
+      h("p", {}, "Your answer: ", r.answered ? r.picked : h("em", {}, "Not answered")),
+      h("p", {}, "Correct answer: ", h("strong", {}, r.q.answer)),
+      h("p", { class: "muted" }, r.q.explanation),
+      renderRefs(r.q.references));
+
+    render("examResults", [
+      h("div", { class: "card" },
+        h("div", { class: "tag" }, "Mock exam results"),
+        h("div", { class: "score" }, pct + "%"),
+        h("p", { class: "muted", style: "margin-bottom:0" }, correct + " of " + total + " correct" + (unanswered ? " · " + unanswered + " unanswered" : "")),
+        h("p", { class: "muted small" },
+          (timedOut ? "Time ran out. " : "") +
+          "Time used " + fmtTime(used) + " of " + fmtTime(exam.limitMs) +
+          (answered ? " · about " + Math.round(used / 1000 / answered) + " seconds per answered question" : "")),
+        multiDomain ? h("div", {}, h("h2", { style: "margin-top:12px" }, "By domain"),
+          breakdown(res, q => String(q.domain), q => "Domain " + q.domain + ": " + q.domainName)) : null,
+        h("div", {}, h("h2", { style: "margin-top:12px" }, "By difficulty"), levelBreakdown(res)),
+        h("div", {}, h("h2", { style: "margin-top:12px" }, "By objective"),
+          breakdown(res, q => q.objective, q => q.objective + " " + q.objectiveName)),
+        savedNote()),
+      h("div", { class: "row" },
+        missed.length ? h("button", { class: "btn", onclick: () => startWith(shuffle(missed.map(r => r.q))) }, "Practise missed (" + missed.length + ")") : null,
+        h("button", { class: "btn secondary", onclick: () => { exam = null; renderSetup(true); } }, "Back to start")),
+      missed.length ? h("div", { class: "card", style: "margin-top:12px" },
+        h("h2", {}, "Review missed questions (" + missed.length + ")"),
+        missed.map(reviewItem)) : null,
+      h("div", { class: "card", style: "margin-top:12px" },
+        h("details", { class: "review" },
+          h("summary", {}, "Review all " + total + " questions"),
+          res.map(reviewItem)))
+    ], true);
+  }
+
+  function updateSummary() {
+    const total = totalCount();
+    const picked = data.domains.filter(d => effectiveCount(d.domain) > 0).length;
+    const t = document.getElementById("total");
+    if (t) t.textContent = total + " question" + (total === 1 ? "" : "s") + (picked > 1 ? " from " + picked + " domains" : "");
+    const s = document.getElementById("start");
+    if (s) s.disabled = total === 0;
+  }
+
+  function copyLink() {
+    const link = shareLink();
+    try { history.replaceState(null, "", "#" + configString()); } catch (e) { /* ignore */ }
+    const done = () => { const t = document.getElementById("toast"); if (t) { t.textContent = "Link copied"; setTimeout(() => { t.textContent = ""; }, 2000); } };
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(link).then(done, () => prompt("Copy this link:", link));
+    } else {
+      prompt("Copy this link:", link);
+    }
   }
 
   // ---------- quiz ----------
-  function start(pool, count) {
-    let qs = pool.slice();
+  function startFromSettings() {
+    saveConfig();
+    let qs = [];
+    for (const dom of data.domains) {
+      const n = effectiveCount(dom.domain);
+      if (!n) continue;
+      qs = qs.concat(shuffle(domainPool(dom.domain)).slice(0, n));
+    }
+    if (!qs.length) return;
     if (settings.shuffleQ) shuffle(qs);
-    if (count !== "all") qs = qs.slice(0, +count);
+    else qs.sort((a, b) => a.domain - b.domain || a.number - b.number);
+    startWith(qs);
+  }
+
+  function startWith(list) {
     session = {
-      qs: qs.map(q => Object.assign({}, q, {
+      qs: list.map(q => Object.assign({}, q, {
         display: q.type === "multiple_choice" && settings.shuffleO ? shuffle(q.options.slice()) : q.options.slice()
       })),
       idx: 0,
-      results: []
+      results: [],
+      startedAt: Date.now(),
+      setup: configString(),
+      recorded: false
     };
     renderQuestion(true);
   }
@@ -320,7 +1035,8 @@
         h("button", { type: "button", class: "link", onclick: renderResults }, "End quiz")),
       h("div", { class: "progress" }, h("div", { style: "width:" + Math.round(100 * answeredCount / total) + "%" })),
       h("div", { class: "card" },
-        h("div", { class: "tag" }, "Domain " + q.domain + " · " + q.objective + " " + q.objectiveName + " · " + (tf ? "True/False" : "Multiple choice")),
+        h("div", { class: "tag" }, "Domain " + q.domain + " · " + q.objective + " " + q.objectiveName + " · " + (tf ? "True/False" : "Multiple choice") + " ",
+          h("span", { class: "lvl " + levelOf(q) }, LEVEL_LABEL[levelOf(q)])),
         h("p", { class: "question" }, q.question),
         opts,
         feedback,
@@ -352,38 +1068,58 @@
   }
 
   // ---------- results ----------
+  function breakdown(res, keyFn, labelFn) {
+    const by = {};
+    for (const r of res) {
+      const k = keyFn(r.q);
+      if (!by[k]) by[k] = { label: labelFn(r.q), n: 0, c: 0 };
+      by[k].n++; if (r.ok) by[k].c++;
+    }
+    return Object.keys(by).sort((a, b) => a.localeCompare(b, undefined, { numeric: true })).map(k => {
+      const o = by[k];
+      return h("div", { class: "objrow" },
+        h("span", {}, o.label),
+        h("span", { class: "muted" }, o.c + "/" + o.n + " (" + Math.round(100 * o.c / o.n) + "%)"),
+        h("div", { class: "bar" }, h("div", { style: "width:" + Math.round(100 * o.c / o.n) + "%" })));
+    });
+  }
+  function levelBreakdown(res) {
+    return breakdown(res, q => String(LEVELS.indexOf(levelOf(q))), q => LEVEL_LABEL[levelOf(q)]);
+  }
+
   function renderResults() {
     const res = session.results.filter(Boolean);
     const correct = res.filter(r => r.ok).length;
-    const pct = res.length ? Math.round(100 * correct / res.length) : 0;
-
-    const by = {};
-    for (const r of res) {
-      const k = r.q.objective;
-      if (!by[k]) by[k] = { name: r.q.objectiveName, n: 0, c: 0 };
-      by[k].n++; if (r.ok) by[k].c++;
-    }
-    const objRows = Object.keys(by).sort((a, b) => a.localeCompare(b, undefined, { numeric: true })).map(k => {
-      const o = by[k];
-      return h("div", { class: "objrow" },
-        h("span", {}, k + " " + o.name),
-        h("span", { class: "muted" }, o.c + "/" + o.n),
-        h("div", { class: "bar" }, h("div", { style: "width:" + Math.round(100 * o.c / o.n) + "%" })));
-    });
-
+    const score = res.length ? Math.round(100 * correct / res.length) : 0;
+    const domainCount = new Set(res.map(r => r.q.domain)).size;
     const missed = res.filter(r => !r.ok);
+    if (!session.recorded && res.length) {
+      session.recorded = true;
+      const now = Date.now();
+      recordAttempt({
+        mode: "practice", startedAt: session.startedAt, endedAt: now, durationMs: now - session.startedAt,
+        questions: session.qs.length, answered: res.length, setup: session.setup
+      }, res);
+    }
+
     render("results", [
       h("div", { class: "card" },
-        h("div", { class: "score" }, pct + "%"),
+        h("div", { class: "score" }, score + "%"),
         h("p", { class: "muted" }, correct + " of " + res.length + " answered correctly" + (res.length < session.qs.length ? " (ended early, " + session.qs.length + " in quiz)" : "")),
-        objRows.length ? h("div", {}, h("h2", { style: "margin-top:12px" }, "By objective"), objRows) : null),
+        domainCount > 1 ? h("div", {}, h("h2", { style: "margin-top:12px" }, "By domain"),
+          breakdown(res, q => String(q.domain), q => "Domain " + q.domain + ": " + q.domainName)) : null,
+        res.length ? h("div", {}, h("h2", { style: "margin-top:12px" }, "By difficulty"), levelBreakdown(res)) : null,
+        res.length ? h("div", {}, h("h2", { style: "margin-top:12px" }, "By objective"),
+          breakdown(res, q => q.objective, q => q.objective + " " + q.objectiveName)) : null,
+        res.length ? savedNote() : null),
       h("div", { class: "row" },
-        missed.length ? h("button", { class: "btn", onclick: () => start(missed.map(r => r.q), "all") }, "Retry missed (" + missed.length + ")") : null,
-        h("button", { class: "btn secondary", onclick: () => renderSetup(true) }, "New quiz")),
+        missed.length ? h("button", { class: "btn", onclick: () => startWith(settings.shuffleQ ? shuffle(missed.map(r => r.q)) : missed.map(r => r.q)) }, "Retry missed (" + missed.length + ")") : null,
+        h("button", { class: "btn secondary", onclick: startFromSettings }, "New questions, same setup"),
+        h("button", { class: "btn secondary", onclick: () => renderSetup(true) }, "Change quiz")),
       missed.length ? h("div", { class: "card", style: "margin-top:12px" },
         h("h2", {}, "Review missed questions"),
-        missed.map(r => h("details", {},
-          h("summary", {}, r.q.objective + " · " + r.q.question),
+        missed.map(r => h("details", { class: "review" },
+          h("summary", {}, r.q.objective + " · " + r.q.question + " ", h("span", { class: "lvl " + levelOf(r.q) }, LEVEL_LABEL[levelOf(r.q)])),
           h("p", {}, "Your answer: ", r.picked),
           h("p", {}, "Correct answer: ", h("strong", {}, r.q.answer)),
           h("p", { class: "muted" }, r.q.explanation),
@@ -393,6 +1129,22 @@
 
   // ---------- keyboard ----------
   document.addEventListener("keydown", e => {
+    if (app.dataset.view === "exam" && exam && !exam.finished) {
+      if (e.metaKey || e.ctrlKey || e.altKey) return;
+      const k = e.key.toLowerCase();
+      if (k === "enter") {
+        if (document.activeElement && document.activeElement.classList.contains("link")) return;
+        if (exam.selected != null) { e.preventDefault(); submitAnswer(); }
+        return;
+      }
+      const q = byId[exam.ids[exam.idx]];
+      const n = exam.display[exam.idx].length;
+      let i = -1;
+      if (q.type === "true_false") { if (k === "t" || k === "1") i = 0; else if (k === "f" || k === "2") i = 1; }
+      else { const m = "abcdef".indexOf(k); const num = parseInt(k, 10); i = (k.length === 1 && m >= 0) ? m : (num >= 1 ? num - 1 : -1); }
+      if (i >= 0 && i < n) { e.preventDefault(); exam.selected = i; renderExam(false); }
+      return;
+    }
     if (!session || app.dataset.view !== "quiz") return;
     if (e.metaKey || e.ctrlKey || e.altKey) return;
     const q = session.qs[session.idx];
@@ -406,6 +1158,11 @@
       if (k === "enter" && document.activeElement && document.activeElement.tagName === "BUTTON") return;
       e.preventDefault(); next();
     }
+  });
+
+  // warn before leaving mid-exam (progress is saved, but the clock keeps running)
+  window.addEventListener("beforeunload", e => {
+    if (exam && !exam.finished && app.dataset.view === "exam") { e.preventDefault(); e.returnValue = ""; }
   });
 
   load();
